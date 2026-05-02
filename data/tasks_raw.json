@@ -1,0 +1,578 @@
+[
+  {
+    "task_id": "debug_001",
+    "intent": "debug",
+    "raw_utterance": "the database connection is timing out and causing an infinite loop",
+    "source": "dataset_sampled",
+    "cluster": 0,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": "infinite loop"
+    }
+  },
+  {
+    "task_id": "debug_002",
+    "intent": "debug",
+    "raw_utterance": "i get a key error when i try to merge two dataframes with pandas",
+    "source": "dataset_sampled",
+    "cluster": 1,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": "key error"
+    }
+  },
+  {
+    "task_id": "debug_003",
+    "intent": "debug",
+    "raw_utterance": "how do i fix the null pointer exception in the login service",
+    "source": "dataset_sampled",
+    "cluster": 2,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": "null pointer"
+    }
+  },
+  {
+    "task_id": "debug_004",
+    "intent": "debug",
+    "raw_utterance": "i cant figure out why my docker container is exiting with code 137 every few hours",
+    "source": "dataset_sampled",
+    "cluster": 3,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": "137"
+    }
+  },
+  {
+    "task_id": "debug_005",
+    "intent": "debug",
+    "raw_utterance": "so the android app is crashing when i try to upload an image",
+    "source": "dataset_sampled",
+    "cluster": 4,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "debug_006",
+    "intent": "debug",
+    "raw_utterance": "ok so like i was trying to process an order and the handler just throws a runtime exception and i am like what is going on with the memory leak and stuff",
+    "source": "dataset_sampled",
+    "cluster": 5,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": "runtime exception"
+    }
+  },
+  {
+    "task_id": "generate_001",
+    "intent": "generate",
+    "raw_utterance": "how do i create a dropdown menu in react",
+    "source": "dataset_sampled",
+    "cluster": 0,
+    "entities_in_source": {
+      "language": null,
+      "framework": "react",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "generate_002",
+    "intent": "generate",
+    "raw_utterance": "can you write me a middleware for jwt authentication in django",
+    "source": "dataset_sampled",
+    "cluster": 1,
+    "entities_in_source": {
+      "language": null,
+      "framework": "django",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "generate_003",
+    "intent": "generate",
+    "raw_utterance": "write a pandas script to clean and normalize this csv file",
+    "source": "dataset_sampled",
+    "cluster": 2,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "generate_004",
+    "intent": "generate",
+    "raw_utterance": "i need to generate a rest endpoint for registering users using express",
+    "source": "dataset_sampled",
+    "cluster": 3,
+    "entities_in_source": {
+      "language": null,
+      "framework": "express",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "generate_005",
+    "intent": "generate",
+    "raw_utterance": "ok so like i want to automate my daily backups with a bash script but i dont know how to use terraform with it",
+    "source": "dataset_sampled",
+    "cluster": 4,
+    "entities_in_source": {
+      "language": "bash",
+      "framework": "terraform",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "generate_006",
+    "intent": "generate",
+    "raw_utterance": "i want to generate a sql query to get top ten customers",
+    "source": "dataset_sampled",
+    "cluster": 5,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "refactor_001",
+    "intent": "refactor",
+    "raw_utterance": "refactoring the monolithic api into smaller services is gonna be a huge task",
+    "source": "dataset_sampled",
+    "cluster": 0,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "refactor_002",
+    "intent": "refactor",
+    "raw_utterance": "refactoring the config module to have more descriptive variable names would be really helpful",
+    "source": "dataset_sampled",
+    "cluster": 1,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "refactor_003",
+    "intent": "refactor",
+    "raw_utterance": "lets refactor the user controller using the strategy pattern and make it more functional",
+    "source": "dataset_sampled",
+    "cluster": 2,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "refactor_004",
+    "intent": "refactor",
+    "raw_utterance": "refactoring the auth service to use async await is gonna take some time but its worth it",
+    "source": "dataset_sampled",
+    "cluster": 3,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "refactor_005",
+    "intent": "refactor",
+    "raw_utterance": "so basically we need to refactor the validation logic into a separate file",
+    "source": "dataset_sampled",
+    "cluster": 4,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "refactor_006",
+    "intent": "refactor",
+    "raw_utterance": "simplify the payment logic it is too complex",
+    "source": "dataset_sampled",
+    "cluster": 5,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "explain_001",
+    "intent": "explain",
+    "raw_utterance": "ok so the caching layer is like interacting with the database but how does it do it and what role does indexing play in all this",
+    "source": "dataset_sampled",
+    "cluster": 0,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "explain_002",
+    "intent": "explain",
+    "raw_utterance": "i want to know how the middleware stack interacts with oauth in this express app",
+    "source": "dataset_sampled",
+    "cluster": 1,
+    "entities_in_source": {
+      "language": null,
+      "framework": "express",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "explain_003",
+    "intent": "explain",
+    "raw_utterance": "what does this regex pattern do",
+    "source": "dataset_sampled",
+    "cluster": 2,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "explain_004",
+    "intent": "explain",
+    "raw_utterance": "docker and kubernetes whats the real difference between them",
+    "source": "dataset_sampled",
+    "cluster": 3,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "explain_005",
+    "intent": "explain",
+    "raw_utterance": "explain the difference between promises and async await",
+    "source": "dataset_sampled",
+    "cluster": 4,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "explain_006",
+    "intent": "explain",
+    "raw_utterance": "why are we using redux in this project",
+    "source": "dataset_sampled",
+    "cluster": 5,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "scaffold_001",
+    "intent": "scaffold",
+    "raw_utterance": "so like i am thinking aloud here but i want to scaffold a nodejs express app and then maybe add some nextjs and typescript later",
+    "source": "dataset_sampled",
+    "cluster": 0,
+    "entities_in_source": {
+      "language": "typescript",
+      "framework": "express",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "scaffold_002",
+    "intent": "scaffold",
+    "raw_utterance": "so yeah i need to set up a new flutter app with firebase and some ui components using jetpack compose and maybe some android features and a fastapi backend and um",
+    "source": "dataset_sampled",
+    "cluster": 1,
+    "entities_in_source": {
+      "language": null,
+      "framework": "flutter",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "scaffold_003",
+    "intent": "scaffold",
+    "raw_utterance": "i need to set up a new django project with rest framework and authentication from scratch",
+    "source": "dataset_sampled",
+    "cluster": 2,
+    "entities_in_source": {
+      "language": null,
+      "framework": "django",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "scaffold_004",
+    "intent": "scaffold",
+    "raw_utterance": "i want to create a terraform project for aws with prometheus monitoring",
+    "source": "dataset_sampled",
+    "cluster": 3,
+    "entities_in_source": {
+      "language": null,
+      "framework": "terraform",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "scaffold_005",
+    "intent": "scaffold",
+    "raw_utterance": "create a monorepo setup with shared component library",
+    "source": "dataset_sampled",
+    "cluster": 4,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "scaffold_006",
+    "intent": "scaffold",
+    "raw_utterance": "i want to start a new project with jupyter and conda and maybe use fastapi",
+    "source": "dataset_sampled",
+    "cluster": 5,
+    "entities_in_source": {
+      "language": null,
+      "framework": "fastapi",
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "test_001",
+    "intent": "test",
+    "raw_utterance": "test checkout flow",
+    "source": "dataset_sampled",
+    "cluster": 0,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "test_002",
+    "intent": "test",
+    "raw_utterance": "i am trying to figure out how to mock the stripe api for my payment service tests but its kinda tricky",
+    "source": "dataset_sampled",
+    "cluster": 1,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "test_003",
+    "intent": "test",
+    "raw_utterance": "can you write some unit tests for the login service using jest maybe",
+    "source": "dataset_sampled",
+    "cluster": 2,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "test_004",
+    "intent": "test",
+    "raw_utterance": "can you add load tests for the search endpoint using locust",
+    "source": "dataset_sampled",
+    "cluster": 3,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "test_005",
+    "intent": "test",
+    "raw_utterance": "i want to add some tests for the data validation functions to make sure they are working",
+    "source": "dataset_sampled",
+    "cluster": 4,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "test_006",
+    "intent": "test",
+    "raw_utterance": "write a pytest fixture for the database connection",
+    "source": "dataset_sampled",
+    "cluster": 5,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "document_001",
+    "intent": "document",
+    "raw_utterance": "comment the payment processing",
+    "source": "dataset_sampled",
+    "cluster": 0,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "document_002",
+    "intent": "document",
+    "raw_utterance": "so yeah i need to document the environment variables and project setup and all that jazz",
+    "source": "dataset_sampled",
+    "cluster": 1,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "document_003",
+    "intent": "document",
+    "raw_utterance": "so i have this api module and i need to write jsdoc comments for all the public functions",
+    "source": "dataset_sampled",
+    "cluster": 2,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "document_004",
+    "intent": "document",
+    "raw_utterance": "i need to write some changelog entries for the new version we just pushed",
+    "source": "dataset_sampled",
+    "cluster": 3,
+    "entities_in_source": {
+      "language": null,
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "document_005",
+    "intent": "document",
+    "raw_utterance": "need to add docstrings to my python data processing functions",
+    "source": "dataset_sampled",
+    "cluster": 4,
+    "entities_in_source": {
+      "language": "python",
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "document_006",
+    "intent": "document",
+    "raw_utterance": "so like i am trying to figure out how to create a postman collection and document all the api endpoints we have using swagger and python and stuff",
+    "source": "dataset_sampled",
+    "cluster": 5,
+    "entities_in_source": {
+      "language": "python",
+      "framework": null,
+      "error_type": null
+    }
+  },
+  {
+    "task_id": "composite_001",
+    "intent": "composite",
+    "sub_intents": [
+      "debug",
+      "test"
+    ],
+    "raw_utterance": "um debug the null pointer exception in the user service then write unit tests for it so we don't regress",
+    "source": "manually_authored",
+    "cluster": null,
+    "entities_in_source": {}
+  },
+  {
+    "task_id": "composite_002",
+    "intent": "composite",
+    "sub_intents": [
+      "refactor",
+      "document"
+    ],
+    "raw_utterance": "refactor the payment service to separate concerns and uh document the changes with proper inline comments",
+    "source": "manually_authored",
+    "cluster": null,
+    "entities_in_source": {}
+  },
+  {
+    "task_id": "composite_003",
+    "intent": "composite",
+    "sub_intents": [
+      "explain",
+      "generate"
+    ],
+    "raw_utterance": "explain why the kafka consumer is lagging and like generate a fix using async processing",
+    "source": "manually_authored",
+    "cluster": null,
+    "entities_in_source": {}
+  },
+  {
+    "task_id": "composite_004",
+    "intent": "composite",
+    "sub_intents": [
+      "scaffold",
+      "test"
+    ],
+    "raw_utterance": "scaffold a new microservice for order management and basically add integration tests for the main endpoints",
+    "source": "manually_authored",
+    "cluster": null,
+    "entities_in_source": {}
+  },
+  {
+    "task_id": "composite_005",
+    "intent": "composite",
+    "sub_intents": [
+      "debug",
+      "document"
+    ],
+    "raw_utterance": "um fix the memory leak in the connection pool and write documentation about what was causing it and how you fixed it",
+    "source": "manually_authored",
+    "cluster": null,
+    "entities_in_source": {}
+  },
+  {
+    "task_id": "composite_006",
+    "intent": "composite",
+    "sub_intents": [
+      "generate",
+      "explain"
+    ],
+    "raw_utterance": "generate a new REST API endpoint for user profile updates and explain how it integrates with the existing auth middleware",
+    "source": "manually_authored",
+    "cluster": null,
+    "entities_in_source": {}
+  }
+]

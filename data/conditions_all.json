@@ -1,0 +1,866 @@
+[
+  {
+    "task_id": "debug_001",
+    "intent": "debug",
+    "condition_a": "the database connection is timing out and causing an infinite loop",
+    "condition_b": "The database connection is timing out and causing an infinite loop.",
+    "condition_c": {
+      "raw_utterance": "the database connection is timing out and causing an infinite loop",
+      "normalized": "database connection timing out causing infinite loop",
+      "intent": "debug",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "infinite loop",
+        "component": "database connection",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "debug_002",
+    "intent": "debug",
+    "condition_a": "i get a key error when i try to merge two dataframes with pandas",
+    "condition_b": "I get a key error when i try to merge two dataframes with pandas.",
+    "condition_c": {
+      "raw_utterance": "i get a key error when i try to merge two dataframes with pandas",
+      "normalized": "get key error when try merge two dataframes with pandas",
+      "intent": "debug",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "key error",
+        "component": "dataframes",
+        "language": "null",
+        "framework": "pandas"
+      }
+    }
+  },
+  {
+    "task_id": "debug_003",
+    "intent": "debug",
+    "condition_a": "how do i fix the null pointer exception in the login service",
+    "condition_b": "How do i fix the null pointer exception in the login service.",
+    "condition_c": {
+      "raw_utterance": "how do i fix the null pointer exception in the login service",
+      "normalized": "fix null pointer exception in login service",
+      "intent": "debug",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "null pointer exception",
+        "component": "login service",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "debug_004",
+    "intent": "debug",
+    "condition_a": "i cant figure out why my docker container is exiting with code 137 every few hours",
+    "condition_b": "I cant figure out why my docker container is exiting with code 137 every few hours.",
+    "condition_c": {
+      "raw_utterance": "i cant figure out why my docker container is exiting with code 137 every few hours",
+      "normalized": "cant figure out why docker container exiting with code 137 every few hours",
+      "intent": "debug",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "exit code 137",
+        "component": "docker container",
+        "language": null,
+        "framework": "docker"
+      }
+    }
+  },
+  {
+    "task_id": "debug_005",
+    "intent": "debug",
+    "condition_a": "so the android app is crashing when i try to upload an image",
+    "condition_b": "So the android app is crashing when i try to upload an image.",
+    "condition_c": {
+      "raw_utterance": "so the android app is crashing when i try to upload an image",
+      "normalized": "android app crashing when upload image",
+      "intent": "debug",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "crashing",
+        "component": "android app",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "debug_006",
+    "intent": "debug",
+    "condition_a": "ok so like i was trying to process an order and the handler just throws a runtime exception and i am like what is going on with the memory leak and stuff",
+    "condition_b": "I was trying to process an order and the handler just throws a runtime exception and i am what is going on with the memory leak and stuff.",
+    "condition_c": {
+      "raw_utterance": "ok so like i was trying to process an order and the handler just throws a runtime exception and i am like what is going on with the memory leak and stuff",
+      "normalized": "I was trying to process an order and the handler throws a runtime exception, what is going on with the memory leak",
+      "intent": "debug",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "runtime exception",
+        "component": "handler",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "generate_001",
+    "intent": "generate",
+    "condition_a": "how do i create a dropdown menu in react",
+    "condition_b": "How do i create a dropdown menu in react.",
+    "condition_c": {
+      "raw_utterance": "how do i create a dropdown menu in react",
+      "normalized": "create dropdown menu in react",
+      "intent": "scaffold",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "dropdown menu",
+        "language": null,
+        "framework": "react"
+      }
+    }
+  },
+  {
+    "task_id": "generate_002",
+    "intent": "generate",
+    "condition_a": "can you write me a middleware for jwt authentication in django",
+    "condition_b": "Can you write me a middleware for jwt authentication in django.",
+    "condition_c": {
+      "raw_utterance": "can you write me a middleware for jwt authentication in django",
+      "normalized": "write middleware jwt authentication django",
+      "intent": "generate",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "middleware",
+        "language": null,
+        "framework": "django"
+      }
+    }
+  },
+  {
+    "task_id": "generate_003",
+    "intent": "generate",
+    "condition_a": "write a pandas script to clean and normalize this csv file",
+    "condition_b": "Write a pandas script to clean and normalize this csv file.",
+    "condition_c": {
+      "raw_utterance": "write a pandas script to clean and normalize this csv file",
+      "normalized": "write pandas script to clean and normalize csv file",
+      "intent": "generate",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": "python",
+        "framework": "pandas"
+      }
+    }
+  },
+  {
+    "task_id": "generate_004",
+    "intent": "generate",
+    "condition_a": "i need to generate a rest endpoint for registering users using express",
+    "condition_b": "I need to generate a rest endpoint for registering users using express.",
+    "condition_c": {
+      "raw_utterance": "i need to generate a rest endpoint for registering users using express",
+      "normalized": "generate rest endpoint for registering users using express",
+      "intent": "generate",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "rest endpoint",
+        "language": null,
+        "framework": "express"
+      }
+    }
+  },
+  {
+    "task_id": "generate_005",
+    "intent": "generate",
+    "condition_a": "ok so like i want to automate my daily backups with a bash script but i dont know how to use terraform with it",
+    "condition_b": "I want to automate my daily backups with a bash script but i dont know how to use terraform with it.",
+    "condition_c": {
+      "raw_utterance": "ok so like i want to automate my daily backups with a bash script but i dont know how to use terraform with it",
+      "normalized": "I want to automate my daily backups with a bash script but I don't know how to use Terraform with it",
+      "intent": "scaffold+explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "bash script",
+        "language": "bash",
+        "framework": "Terraform"
+      }
+    }
+  },
+  {
+    "task_id": "generate_006",
+    "intent": "generate",
+    "condition_a": "i want to generate a sql query to get top ten customers",
+    "condition_b": "I want to generate a sql query to get top ten customers.",
+    "condition_c": {
+      "raw_utterance": "i want to generate a sql query to get top ten customers",
+      "normalized": "generate sql query to get top ten customers",
+      "intent": "generate",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": "sql",
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "refactor_001",
+    "intent": "refactor",
+    "condition_a": "refactoring the monolithic api into smaller services is gonna be a huge task",
+    "condition_b": "Refactoring the monolithic api into smaller services is gonna be a huge task.",
+    "condition_c": {
+      "raw_utterance": "refactoring the monolithic api into smaller services is gonna be a huge task",
+      "normalized": "refactoring the monolithic api into smaller services is a huge task",
+      "intent": "refactor",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "api",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "refactor_002",
+    "intent": "refactor",
+    "condition_a": "refactoring the config module to have more descriptive variable names would be really helpful",
+    "condition_b": "Refactoring the config module to have more descriptive variable names would be really helpful.",
+    "condition_c": {
+      "raw_utterance": "refactoring the config module to have more descriptive variable names would be really helpful",
+      "normalized": "refactoring config module to have more descriptive variable names",
+      "intent": "refactor",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "config module",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "refactor_003",
+    "intent": "refactor",
+    "condition_a": "lets refactor the user controller using the strategy pattern and make it more functional",
+    "condition_b": "Lets refactor the user controller using the strategy pattern and make it more functional.",
+    "condition_c": {
+      "raw_utterance": "lets refactor the user controller using the strategy pattern and make it more functional",
+      "normalized": "refactor user controller using strategy pattern and make functional",
+      "intent": "refactor",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "user controller",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "refactor_004",
+    "intent": "refactor",
+    "condition_a": "refactoring the auth service to use async await is gonna take some time but its worth it",
+    "condition_b": "Refactoring the auth service to use async await is gonna take some time but its worth it.",
+    "condition_c": {
+      "raw_utterance": "refactoring the auth service to use async await is gonna take some time but its worth it",
+      "normalized": "refactoring the auth service to use async await will take time but it's worth it",
+      "intent": "refactor",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "auth service",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "refactor_005",
+    "intent": "refactor",
+    "condition_a": "so basically we need to refactor the validation logic into a separate file",
+    "condition_b": "We need to refactor the validation logic into a separate file.",
+    "condition_c": {
+      "raw_utterance": "so basically we need to refactor the validation logic into a separate file",
+      "normalized": "we need to refactor the validation logic into a separate file",
+      "intent": "refactor",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "validation logic",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "refactor_006",
+    "intent": "refactor",
+    "condition_a": "simplify the payment logic it is too complex",
+    "condition_b": "Simplify the payment logic it is too complex.",
+    "condition_c": {
+      "raw_utterance": "simplify the payment logic it is too complex",
+      "normalized": "simplify payment logic it is too complex",
+      "intent": "refactor",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "payment logic",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "explain_001",
+    "intent": "explain",
+    "condition_a": "ok so the caching layer is like interacting with the database but how does it do it and what role does indexing play in all this",
+    "condition_b": "The caching layer is interacting with the database but how does it do it and what role does indexing play in all this.",
+    "condition_c": {
+      "raw_utterance": "ok so the caching layer is like interacting with the database but how does it do it and what role does indexing play in all this",
+      "normalized": "the caching layer is like interacting with the database but how does it do it and what role does indexing play",
+      "intent": "explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "caching layer",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "explain_002",
+    "intent": "explain",
+    "condition_a": "i want to know how the middleware stack interacts with oauth in this express app",
+    "condition_b": "I want to know how the middleware stack interacts with oauth in this express app.",
+    "condition_c": {
+      "raw_utterance": "i want to know how the middleware stack interacts with oauth in this express app",
+      "normalized": "know how middleware stack interacts with oauth in express app",
+      "intent": "explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "middleware stack",
+        "language": null,
+        "framework": "express"
+      }
+    }
+  },
+  {
+    "task_id": "explain_003",
+    "intent": "explain",
+    "condition_a": "what does this regex pattern do",
+    "condition_b": "What does this regex pattern do.",
+    "condition_c": {
+      "raw_utterance": "what does this regex pattern do",
+      "normalized": "what does this regex pattern do",
+      "intent": "explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "regex pattern",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "explain_004",
+    "intent": "explain",
+    "condition_a": "docker and kubernetes whats the real difference between them",
+    "condition_b": "Docker and kubernetes whats the real difference between them.",
+    "condition_c": {
+      "raw_utterance": "docker and kubernetes whats the real difference between them",
+      "normalized": "docker and kubernetes what's the real difference between them",
+      "intent": "explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": null,
+        "framework": "docker, kubernetes"
+      }
+    }
+  },
+  {
+    "task_id": "explain_005",
+    "intent": "explain",
+    "condition_a": "explain the difference between promises and async await",
+    "condition_b": "Explain the difference between promises and async await.",
+    "condition_c": {
+      "raw_utterance": "explain the difference between promises and async await",
+      "normalized": "explain difference between promises and async await",
+      "intent": "explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "explain_006",
+    "intent": "explain",
+    "condition_a": "why are we using redux in this project",
+    "condition_b": "Why are we using redux in this project.",
+    "condition_c": {
+      "raw_utterance": "why are we using redux in this project",
+      "normalized": "why use redux in this project",
+      "intent": "explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": null,
+        "framework": "redux"
+      }
+    }
+  },
+  {
+    "task_id": "scaffold_001",
+    "intent": "scaffold",
+    "condition_a": "so like i am thinking aloud here but i want to scaffold a nodejs express app and then maybe add some nextjs and typescript later",
+    "condition_b": "I am thinking aloud here but i want to scaffold a nodejs express app and then maybe add some nextjs and typescript later.",
+    "condition_c": {
+      "raw_utterance": "so like i am thinking aloud here but i want to scaffold a nodejs express app and then maybe add some nextjs and typescript later",
+      "normalized": "i want to scaffold a nodejs express app and add nextjs and typescript later",
+      "intent": "scaffold+generate",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": "javascript",
+        "framework": "express"
+      }
+    }
+  },
+  {
+    "task_id": "scaffold_002",
+    "intent": "scaffold",
+    "condition_a": "so yeah i need to set up a new flutter app with firebase and some ui components using jetpack compose and maybe some android features and a fastapi backend and um",
+    "condition_b": "I need to set up a new flutter app with firebase and some ui components using jetpack compose and maybe some android features and a fastapi backend and.",
+    "condition_c": {
+      "raw_utterance": "so yeah i need to set up a new flutter app with firebase and some ui components using jetpack compose and maybe some android features and a fastapi backend and um",
+      "normalized": "need to set up a new flutter app with firebase and ui components using jetpack compose and android features and fastapi backend",
+      "intent": "scaffold",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "ui components",
+        "language": null,
+        "framework": "flutter, firebase, jetpack compose, fastapi"
+      }
+    }
+  },
+  {
+    "task_id": "scaffold_003",
+    "intent": "scaffold",
+    "condition_a": "i need to set up a new django project with rest framework and authentication from scratch",
+    "condition_b": "I need to set up a new django project with rest framework and authentication from scratch.",
+    "condition_c": {
+      "raw_utterance": "i need to set up a new django project with rest framework and authentication from scratch",
+      "normalized": "set up new django project with rest framework and authentication from scratch",
+      "intent": "scaffold",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": "python",
+        "framework": "django"
+      }
+    }
+  },
+  {
+    "task_id": "scaffold_004",
+    "intent": "scaffold",
+    "condition_a": "i want to create a terraform project for aws with prometheus monitoring",
+    "condition_b": "I want to create a terraform project for aws with prometheus monitoring.",
+    "condition_c": {
+      "raw_utterance": "i want to create a terraform project for aws with prometheus monitoring",
+      "normalized": "create terraform project for aws with prometheus monitoring",
+      "intent": "scaffold",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "prometheus",
+        "language": null,
+        "framework": "terraform"
+      }
+    }
+  },
+  {
+    "task_id": "scaffold_005",
+    "intent": "scaffold",
+    "condition_a": "create a monorepo setup with shared component library",
+    "condition_b": "Create a monorepo setup with shared component library.",
+    "condition_c": {
+      "raw_utterance": "create a monorepo setup with shared component library",
+      "normalized": "create monorepo setup with shared component library",
+      "intent": "scaffold",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "shared component library",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "scaffold_006",
+    "intent": "scaffold",
+    "condition_a": "i want to start a new project with jupyter and conda and maybe use fastapi",
+    "condition_b": "I want to start a new project with jupyter and conda and maybe use fastapi.",
+    "condition_c": {
+      "raw_utterance": "i want to start a new project with jupyter and conda and maybe use fastapi",
+      "normalized": "start new project with jupyter and conda and use fastapi",
+      "intent": "scaffold",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "jupyter",
+        "language": null,
+        "framework": "fastapi"
+      }
+    }
+  },
+  {
+    "task_id": "test_001",
+    "intent": "test",
+    "condition_a": "test checkout flow",
+    "condition_b": "Test checkout flow.",
+    "condition_c": {
+      "raw_utterance": "test checkout flow",
+      "normalized": "test checkout flow",
+      "intent": "test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "checkout flow",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "test_002",
+    "intent": "test",
+    "condition_a": "i am trying to figure out how to mock the stripe api for my payment service tests but its kinda tricky",
+    "condition_b": "I am trying to figure out how to mock the stripe api for my payment service tests but its tricky.",
+    "condition_c": {
+      "raw_utterance": "i am trying to figure out how to mock the stripe api for my payment service tests but its kinda tricky",
+      "normalized": "trying to mock stripe api for payment service tests",
+      "intent": "test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "stripe api",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "test_003",
+    "intent": "test",
+    "condition_a": "can you write some unit tests for the login service using jest maybe",
+    "condition_b": "Can you write some unit tests for the login service using jest maybe.",
+    "condition_c": {
+      "raw_utterance": "can you write some unit tests for the login service using jest maybe",
+      "normalized": "write unit tests for login service using jest",
+      "intent": "test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "login service",
+        "language": null,
+        "framework": "jest"
+      }
+    }
+  },
+  {
+    "task_id": "test_004",
+    "intent": "test",
+    "condition_a": "can you add load tests for the search endpoint using locust",
+    "condition_b": "Can you add load tests for the search endpoint using locust.",
+    "condition_c": {
+      "raw_utterance": "can you add load tests for the search endpoint using locust",
+      "normalized": "add load tests for search endpoint using locust",
+      "intent": "test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "search endpoint",
+        "language": null,
+        "framework": "locust"
+      }
+    }
+  },
+  {
+    "task_id": "test_005",
+    "intent": "test",
+    "condition_a": "i want to add some tests for the data validation functions to make sure they are working",
+    "condition_b": "I want to add some tests for the data validation functions to make sure they are working.",
+    "condition_c": {
+      "raw_utterance": "i want to add some tests for the data validation functions to make sure they are working",
+      "normalized": "add tests for data validation functions",
+      "intent": "test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "data validation functions",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "test_006",
+    "intent": "test",
+    "condition_a": "write a pytest fixture for the database connection",
+    "condition_b": "Write a pytest fixture for the database connection.",
+    "condition_c": {
+      "raw_utterance": "write a pytest fixture for the database connection",
+      "normalized": "write pytest fixture database connection",
+      "intent": "test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "database connection",
+        "language": null,
+        "framework": "pytest"
+      }
+    }
+  },
+  {
+    "task_id": "document_001",
+    "intent": "document",
+    "condition_a": "comment the payment processing",
+    "condition_b": "Comment the payment processing.",
+    "condition_c": {
+      "raw_utterance": "comment the payment processing",
+      "normalized": "comment payment processing",
+      "intent": "document",
+      "confidence_score": 0.8,
+      "entities": {
+        "error_type": null,
+        "component": "payment processing",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "document_002",
+    "intent": "document",
+    "condition_a": "so yeah i need to document the environment variables and project setup and all that jazz",
+    "condition_b": "I need to document the environment variables and project setup and all that jazz.",
+    "condition_c": {
+      "raw_utterance": "so yeah i need to document the environment variables and project setup and all that jazz",
+      "normalized": "need to document environment variables and project setup",
+      "intent": "document",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "document_003",
+    "intent": "document",
+    "condition_a": "so i have this api module and i need to write jsdoc comments for all the public functions",
+    "condition_b": "So i have this api module and i need to write jsdoc comments for all the public functions.",
+    "condition_c": {
+      "raw_utterance": "so i have this api module and i need to write jsdoc comments for all the public functions",
+      "normalized": "i have api module and need to write jsdoc comments for all public functions",
+      "intent": "document",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "api module",
+        "language": "javascript",
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "document_004",
+    "intent": "document",
+    "condition_a": "i need to write some changelog entries for the new version we just pushed",
+    "condition_b": "I need to write some changelog entries for the new version we just pushed.",
+    "condition_c": {
+      "raw_utterance": "i need to write some changelog entries for the new version we just pushed",
+      "normalized": "write changelog entries for new version",
+      "intent": "document",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": null,
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "document_005",
+    "intent": "document",
+    "condition_a": "need to add docstrings to my python data processing functions",
+    "condition_b": "Need to add docstrings to my python data processing functions.",
+    "condition_c": {
+      "raw_utterance": "need to add docstrings to my python data processing functions",
+      "normalized": "add docstrings to python data processing functions",
+      "intent": "document",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "functions",
+        "language": "python",
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "document_006",
+    "intent": "document",
+    "condition_a": "so like i am trying to figure out how to create a postman collection and document all the api endpoints we have using swagger and python and stuff",
+    "condition_b": "I am trying to figure out how to create a postman collection and document all the api endpoints we have using swagger and python and stuff.",
+    "condition_c": {
+      "raw_utterance": "so like i am trying to figure out how to create a postman collection and document all the api endpoints we have using swagger and python and stuff",
+      "normalized": "I am trying to figure out how to create a Postman collection and document all the API endpoints we have using Swagger and Python",
+      "intent": "document+scaffold",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "Postman",
+        "language": "Python",
+        "framework": "Swagger"
+      }
+    }
+  },
+  {
+    "task_id": "composite_001",
+    "intent": "composite",
+    "condition_a": "um debug the null pointer exception in the user service then write unit tests for it so we don't regress",
+    "condition_b": "Debug the null pointer exception in the user service then write unit tests for it so we do not regress.",
+    "condition_c": {
+      "raw_utterance": "um debug the null pointer exception in the user service then write unit tests for it so we don't regress",
+      "normalized": "debug the null pointer exception in the user service then write unit tests for it",
+      "intent": "debug+test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "null pointer exception",
+        "component": "user service",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "composite_002",
+    "intent": "composite",
+    "condition_a": "refactor the payment service to separate concerns and uh document the changes with proper inline comments",
+    "condition_b": "Refactor the payment service to separate concerns and document the changes with proper inline comments.",
+    "condition_c": {
+      "raw_utterance": "refactor the payment service to separate concerns and uh document the changes with proper inline comments",
+      "normalized": "refactor the payment service to separate concerns and document the changes with proper inline comments",
+      "intent": "refactor+document",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "payment service",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "composite_003",
+    "intent": "composite",
+    "condition_a": "explain why the kafka consumer is lagging and like generate a fix using async processing",
+    "condition_b": "Explain why the kafka consumer is lagging and generate a fix using async processing.",
+    "condition_c": {
+      "raw_utterance": "explain why the kafka consumer is lagging and like generate a fix using async processing",
+      "normalized": "explain why kafka consumer is lagging and generate a fix using async processing",
+      "intent": "explain+generate",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "lagging",
+        "component": "kafka consumer",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "composite_004",
+    "intent": "composite",
+    "condition_a": "scaffold a new microservice for order management and basically add integration tests for the main endpoints",
+    "condition_b": "Scaffold a new microservice for order management and add integration tests for the main endpoints.",
+    "condition_c": {
+      "raw_utterance": "scaffold a new microservice for order management and basically add integration tests for the main endpoints",
+      "normalized": "scaffold new microservice for order management and add integration tests for main endpoints",
+      "intent": "scaffold+test",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "microservice",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "composite_005",
+    "intent": "composite",
+    "condition_a": "um fix the memory leak in the connection pool and write documentation about what was causing it and how you fixed it",
+    "condition_b": "Fix the memory leak in the connection pool and write documentation about what was causing it and how you fixed it.",
+    "condition_c": {
+      "raw_utterance": "um fix the memory leak in the connection pool and write documentation about what was causing it and how you fixed it",
+      "normalized": "fix the memory leak in the connection pool and write documentation about what was causing it and how you fixed it",
+      "intent": "debug+document",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": "memory leak",
+        "component": "connection pool",
+        "language": null,
+        "framework": null
+      }
+    }
+  },
+  {
+    "task_id": "composite_006",
+    "intent": "composite",
+    "condition_a": "generate a new REST API endpoint for user profile updates and explain how it integrates with the existing auth middleware",
+    "condition_b": "Generate a new rest api endpoint for user profile updates and explain how it integrates with the existing auth middleware.",
+    "condition_c": {
+      "raw_utterance": "generate a new REST API endpoint for user profile updates and explain how it integrates with the existing auth middleware",
+      "normalized": "generate new REST API endpoint for user profile updates and explain integration with existing auth middleware",
+      "intent": "generate+explain",
+      "confidence_score": 0.85,
+      "entities": {
+        "error_type": null,
+        "component": "REST API endpoint",
+        "language": null,
+        "framework": null
+      }
+    }
+  }
+]

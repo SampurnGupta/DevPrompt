@@ -1,0 +1,43 @@
+utterance,intent,word_count,language,framework,error_type,cluster,task_id
+the database connection is timing out and causing an infinite loop,debug,11,,,infinite loop,0,debug_001
+i get a key error when i try to merge two dataframes with pandas,debug,14,,,key error,1,debug_002
+how do i fix the null pointer exception in the login service,debug,12,,,null pointer,2,debug_003
+i cant figure out why my docker container is exiting with code 137 every few hours,debug,16,,,137,3,debug_004
+so the android app is crashing when i try to upload an image,debug,13,,,,4,debug_005
+ok so like i was trying to process an order and the handler just throws a runtime exception and i am like what is going on with the memory leak and stuff,debug,32,,,runtime exception,5,debug_006
+how do i create a dropdown menu in react,generate,9,,react,,0,generate_001
+can you write me a middleware for jwt authentication in django,generate,11,,django,,1,generate_002
+write a pandas script to clean and normalize this csv file,generate,11,,,,2,generate_003
+i need to generate a rest endpoint for registering users using express,generate,12,,express,,3,generate_004
+ok so like i want to automate my daily backups with a bash script but i dont know how to use terraform with it,generate,24,bash,terraform,,4,generate_005
+i want to generate a sql query to get top ten customers,generate,12,,,,5,generate_006
+refactoring the monolithic api into smaller services is gonna be a huge task,refactor,13,,,,0,refactor_001
+refactoring the config module to have more descriptive variable names would be really helpful,refactor,14,,,,1,refactor_002
+lets refactor the user controller using the strategy pattern and make it more functional,refactor,14,,,,2,refactor_003
+refactoring the auth service to use async await is gonna take some time but its worth it,refactor,17,,,,3,refactor_004
+so basically we need to refactor the validation logic into a separate file,refactor,13,,,,4,refactor_005
+simplify the payment logic it is too complex,refactor,8,,,,5,refactor_006
+ok so the caching layer is like interacting with the database but how does it do it and what role does indexing play in all this,explain,26,,,,0,explain_001
+i want to know how the middleware stack interacts with oauth in this express app,explain,15,,express,,1,explain_002
+what does this regex pattern do,explain,6,,,,2,explain_003
+docker and kubernetes whats the real difference between them,explain,9,,,,3,explain_004
+explain the difference between promises and async await,explain,8,,,,4,explain_005
+why are we using redux in this project,explain,8,,,,5,explain_006
+so like i am thinking aloud here but i want to scaffold a nodejs express app and then maybe add some nextjs and typescript later,scaffold,25,typescript,express,,0,scaffold_001
+so yeah i need to set up a new flutter app with firebase and some ui components using jetpack compose and maybe some android features and a fastapi backend and um,scaffold,31,,flutter,,1,scaffold_002
+i need to set up a new django project with rest framework and authentication from scratch,scaffold,16,,django,,2,scaffold_003
+i want to create a terraform project for aws with prometheus monitoring,scaffold,12,,terraform,,3,scaffold_004
+create a monorepo setup with shared component library,scaffold,8,,,,4,scaffold_005
+i want to start a new project with jupyter and conda and maybe use fastapi,scaffold,15,,fastapi,,5,scaffold_006
+test checkout flow,test,3,,,,0,test_001
+i am trying to figure out how to mock the stripe api for my payment service tests but its kinda tricky,test,21,,,,1,test_002
+can you write some unit tests for the login service using jest maybe,test,13,,,,2,test_003
+can you add load tests for the search endpoint using locust,test,11,,,,3,test_004
+i want to add some tests for the data validation functions to make sure they are working,test,17,,,,4,test_005
+write a pytest fixture for the database connection,test,8,,,,5,test_006
+comment the payment processing,document,4,,,,0,document_001
+so yeah i need to document the environment variables and project setup and all that jazz,document,16,,,,1,document_002
+so i have this api module and i need to write jsdoc comments for all the public functions,document,18,,,,2,document_003
+i need to write some changelog entries for the new version we just pushed,document,14,,,,3,document_004
+need to add docstrings to my python data processing functions,document,10,python,,,4,document_005
+so like i am trying to figure out how to create a postman collection and document all the api endpoints we have using swagger and python and stuff,document,28,python,,,5,document_006
