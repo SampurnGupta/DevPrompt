@@ -1,0 +1,4 @@
+condition,Intent_Preservation,Tool_F1,Hallucination_Rate,First_Call_Acc,Min_Req_Met,Redundancy,Avg_Tokens,CPSTC
+a,0.669,0.3222,0.1111,0.25,0.1736,0.7014,637.3056,3670.88
+b,0.6798,0.275,0.0694,0.1736,0.1458,0.5625,659.6875,4523.5714
+c,0.6592,0.3978,0.0833,0.3125,0.2222,0.9931,645.9375,2906.7188

@@ -38,66 +38,66 @@ def _count_tokens_fallback(text: str) -> int:
 
 
 # ---------------------------------------------------------------------------
-# Gemini 2.0 Flash  (google.genai — new SDK)
+# Gemini 2.0 Flash via OpenRouter  (no daily limit, OpenAI-compatible)
+# Model: google/gemini-2.0-flash-exp:free
+# Docs:  https://openrouter.ai/google/gemini-2.0-flash-exp:free
 # ---------------------------------------------------------------------------
 
-_gemini_client = None
+_openrouter_client = None
 
-def _get_gemini_client():
-    global _gemini_client
-    if _gemini_client is None:
-        from google import genai
-        api_key = os.getenv("GOOGLE_API_KEY")
+def _get_openrouter_client():
+    global _openrouter_client
+    if _openrouter_client is None:
+        from openai import OpenAI
+        api_key = os.getenv("OPENROUTER_API_KEY")
         if not api_key:
-            raise ValueError("GOOGLE_API_KEY not set")
-        _gemini_client = genai.Client(api_key=api_key)
-    return _gemini_client
+            raise ValueError("OPENROUTER_API_KEY not set in .env")
+        _openrouter_client = OpenAI(
+            api_key=api_key,
+            base_url="https://openrouter.ai/api/v1"
+        )
+    return _openrouter_client
 
 
 def call_gemini(prompt: str, system_prompt: str = None, temperature: float = 0.3,
                 max_tokens: int = 2048, retries: int = 3) -> dict:
-    """Call Gemini 2.5 Flash Lite and return standardized result dict."""
-    from google.genai import types
+    """Call Gemini 2.0 Flash via OpenRouter (no daily limit) and return standardized result dict."""
+    client = _get_openrouter_client()
 
-    client = _get_gemini_client()
-    full_prompt = f"{system_prompt}\n\n{prompt}" if system_prompt else prompt
-
-    config = types.GenerateContentConfig(
-        temperature=temperature,
-        max_output_tokens=max_tokens,
-    )
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    messages.append({"role": "user", "content": prompt})
 
     for attempt in range(retries):
         try:
-            response = client.models.generate_content(
-                model="gemini-2.5-flash-lite",
-                contents=full_prompt,
-                config=config,
+            response = client.chat.completions.create(
+                model="google/gemini-2.0-flash-001",
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
             )
-            text = response.text
-            if text is None:
-                # Safety block or empty response — treat as retryable error
-                finish = getattr(response.candidates[0], 'finish_reason', 'UNKNOWN') if response.candidates else 'NO_CANDIDATES'
-                raise ValueError(f"Gemini returned None text (finish_reason={finish})")
+            text = response.choices[0].message.content
+            if not text:
+                raise ValueError("OpenRouter returned empty response")
             try:
-                meta = response.usage_metadata
-                input_tokens  = meta.prompt_token_count
-                output_tokens = meta.candidates_token_count
+                input_tokens  = response.usage.prompt_tokens
+                output_tokens = response.usage.completion_tokens
             except Exception:
-                input_tokens  = _count_tokens_fallback(full_prompt)
+                input_tokens  = _count_tokens_fallback(prompt)
                 output_tokens = _count_tokens_fallback(text)
 
             return {
                 'response': text,
                 'input_tokens': input_tokens,
                 'output_tokens': output_tokens,
-                'model': 'gemini-2.5-flash-lite'
+                'model': 'gemini-2.0-flash-openrouter'
             }
         except Exception as e:
             if attempt < retries - 1:
                 wait = 2 ** attempt
-                print(f"[Gemini] Attempt {attempt+1} failed: {e}. Retrying in {wait}s...")
-                time.sleep(wait)
+                print(f"[OpenRouter/Gemini] Attempt {attempt+1} failed: {e}. Retrying in {wait}s...")
+                import time; time.sleep(wait)
             else:
                 raise
 
@@ -182,7 +182,7 @@ def _get_cerebras_client():
 
 def call_cerebras(prompt: str, system_prompt: str = None, temperature: float = 0.3,
                   max_tokens: int = 2048, retries: int = 5) -> dict:
-    """Call Cerebras Qwen-3 235B and return standardized result dict."""
+    """Call Cerebras Llama 3.1 8B and return standardized result dict."""
     client = _get_cerebras_client()
 
     messages = []
@@ -193,7 +193,7 @@ def call_cerebras(prompt: str, system_prompt: str = None, temperature: float = 0
     for attempt in range(retries):
         try:
             response = client.chat.completions.create(
-                model="qwen-3-235b-a22b-instruct-2507",
+                model="llama3.1-8b",
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens
@@ -210,7 +210,7 @@ def call_cerebras(prompt: str, system_prompt: str = None, temperature: float = 0
                 'response': text,
                 'input_tokens': input_tokens,
                 'output_tokens': output_tokens,
-                'model': 'qwen-3-235b-cerebras'
+                'model': 'llama3.1-8b-cerebras'
             }
         except Exception as e:
             if attempt < retries - 1:

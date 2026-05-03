@@ -1,0 +1,6 @@
+,hallucination_score,hallucination_score,hallucination_score,intent_preservation,intent_preservation,intent_preservation,tool_f1,tool_f1,tool_f1
+condition,a,b,c,a,b,c,a,b,c
+model,,,,,,,,,
+cerebras,0.1667,0.0833,0.1667,0.5913,0.63,0.5752,0.3891,0.2463,0.4991
+gemini,0.0417,0.0417,0.0,0.7311,0.7258,0.7066,0.125,0.116,0.1701
+groq,0.125,0.0833,0.0833,0.6845,0.6836,0.6959,0.4524,0.4627,0.5241

@@ -1,14 +1,18 @@
 """
-3_run_experiment.py — Phase 3: Main experiment loop.
+3_run_experiment.py - Phase 3: Main experiment loop.
 
-Runs 48 tasks × 3 conditions × 3 models = 432 API calls.
+Runs 48 tasks x 3 conditions x 3 models = 432 API calls.
 Stores every result to SQLite data/results.db with checkpointing.
+Loop order: model -> task -> condition (one model finishes before next starts).
 
-Loop order: model → task → condition (so each model runs consecutively)
+Models & Rate Limits (free tier):
+  gemini   : gemini-2.0-flash        15 RPM / 1500 RPD  -> 4s delay
+  groq     : llama-3.3-70b-versatile 30 RPM / 100K TPD  -> 2s delay
+  cerebras : gpt-oss-120b            30 RPM / 1M  TPD   -> 2s delay
 
 Usage:
     python src/3_run_experiment.py                       # full run, all models
-    python src/3_run_experiment.py --pilot               # 5 tasks × Groq only = 15 calls
+    python src/3_run_experiment.py --pilot               # 5 tasks x Groq only
     python src/3_run_experiment.py --resume              # skip already-completed run_ids
     python src/3_run_experiment.py --model groq          # one model only
     python src/3_run_experiment.py --model cerebras --resume
@@ -96,9 +100,9 @@ def build_prompt(task: dict, condition: str, conditions_data: dict) -> str:
 # ---------------------------------------------------------------------------
 
 RATE_DELAYS = {
-    'gemini':   2.5,
-    'groq':     1.0,
-    'cerebras': 6.0,   # aggressive queue — needs long gap
+    'gemini':   1.5,   # OpenRouter free tier — generous RPM, no daily limit
+    'groq':     2.1,   # 30 RPM free tier (conservative after TPD hit)
+    'cerebras': 2.1,   # 30 RPM free tier
 }
 
 # ---------------------------------------------------------------------------

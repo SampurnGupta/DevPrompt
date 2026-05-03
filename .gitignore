@@ -4,3 +4,20 @@ venv/
 .env.local
 node_modules/
 devflow_dataset.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+*.log
+
+# Project specific
+temp/
+# data/*.db
+# !data/results.db
+
+DevPrompt_Execution_DeepDive.md
+DevPrompt_Project_Summary.md
+walkthrough.md
