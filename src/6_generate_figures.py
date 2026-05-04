@@ -217,7 +217,21 @@ def create_figures():
     plt.savefig(os.path.join(FIG_DIR, 'fig12_intent_by_model.png'))
     plt.close()
 
-    print(f"12 figures generated successfully in {FIG_DIR}")
+    # 13. Input vs Output Token Breakdown
+    tok_df = df.groupby('condition')[['input_tokens', 'output_tokens']].mean().reset_index()
+    plt.figure(figsize=(8, 6))
+    
+    p1 = plt.bar(tok_df['condition'], tok_df['input_tokens'], color='lightblue', label='Input Tokens')
+    p2 = plt.bar(tok_df['condition'], tok_df['output_tokens'], bottom=tok_df['input_tokens'], color='steelblue', label='Output Tokens')
+    
+    plt.title('Token Usage Breakdown: Input vs Output')
+    plt.xlabel('Condition (A=Raw, B=Clean, C=JSON)')
+    plt.ylabel('Average Tokens per Task')
+    plt.legend()
+    plt.savefig(os.path.join(FIG_DIR, 'fig13_token_breakdown.png'))
+    plt.close()
+
+    print(f"13 figures generated successfully in {FIG_DIR}")
 
 if __name__ == '__main__':
     create_figures()

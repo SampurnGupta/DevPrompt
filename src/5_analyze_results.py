@@ -13,6 +13,7 @@ Outputs tables to the console and saves them as CSV in data/
 import sqlite3
 import pandas as pd
 import os
+from scipy import stats
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
 DB_PATH  = os.path.join(DATA_DIR, 'results.db')
@@ -99,21 +100,26 @@ def analyze():
     
     if std_pooled > 0:
         cohens_d = (mean_C - mean_A) / std_pooled
+        d_f1 = (mean_C - mean_A) / std_pooled
     else:
-        cohens_d = 0.0
+        d_f1 = 0.0
         
     print("=== Statistical Analysis ===")
-    print(f"Cohen's d (Condition C vs Condition A) for Tool F1: {cohens_d:.4f}")
-    if cohens_d > 0.8:
-        print("Interpretation: Large effect size. Condition C significantly improves Tool F1.")
-    elif cohens_d > 0.5:
-        print("Interpretation: Medium effect size. Condition C moderately improves Tool F1.")
-    elif cohens_d > 0.2:
-        print("Interpretation: Small effect size. Condition C slightly improves Tool F1.")
+    
+    # Tool F1 T-Test (Cond C vs Cond A)
+    cond_c_f1 = df[df['condition'] == 'c']['tool_f1']
+    cond_a_f1 = df[df['condition'] == 'a']['tool_f1']
+    t_stat, p_value = stats.ttest_ind(cond_c_f1, cond_a_f1)
+    
+    print(f"Cohen's d (Condition C vs Condition A) for Tool F1: {d_f1:.4f}")
+    print(f"Independent T-Test P-Value (Cond C vs Cond A): {p_value:.4f}")
+    
+    if p_value < 0.05:
+        print("Interpretation: Statistically Significant! Condition C improves Tool F1.")
     else:
-        print("Interpretation: Negligible effect size.")
+        print("Interpretation: Not statistically significant at alpha=0.05.")
         
     print("\nAnalysis complete. CSV tables saved to data/ directory.")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     analyze()
