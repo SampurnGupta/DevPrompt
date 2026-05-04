@@ -2,28 +2,13 @@
 
 ## 1. RESEARCH OVERVIEW
 
-### 1.1 What Is Being Built
-Two connected projects:
-
-**Project A — NLP Model (Devflow) [COMPLETED]**
-- Sits inside pipeline: `Voice → Whisper ASR → [NLP MODEL] → Intent-Classified JSON → LLM`
-- Two jobs:
-  1. **Intent Classification** — 7 classes: `debug / generate / refactor / explain / scaffold / test / document`
-  2. **Entity Extraction** — extracts: programming language, framework, error type, component/file name
-- Models built:
-  - `LinearSVC` classifier (`svc_pipeline.pkl`) — classical baseline via TF-IDF (bigrams) → LinearSVC
-  - `DistilBERT` — fine-tuned intent classifier (cannot run locally due to compute limits)
-  - `spaCy NER` — custom EntityRuler for language/framework/error entity extraction
-- Dataset: 1,264 utterances, ~180 per intent class (balanced; balance ratio std/mean = 0.004)
-- Dataset columns: `utterance, intent, word_count, language, framework, error_type`
-
-**Project B — Research Paper (DevPrompt) [IN PROGRESS]**
+**Research Paper (DevPrompt)**
 - Title: *"DevPrompt: Evaluating the Impact of Intent-Classified Structured Prompts on LLM Performance in Agentic Software Development Tasks"*
 
 ---
 
 ### 1.2 Core Hypothesis
-Raw, noisy, unstructured developer utterances (especially voice-transcribed) are ambiguous and hurt LLM performance. Converting them into a **structured, intent-classified JSON prompt** (via the Devflow pipeline) will **measurably improve** LLM performance across:
+Raw, noisy, unstructured developer inputs (especially voice-transcribed) are ambiguous and hurt LLM performance. Converting them into a **structured, intent-classified JSON prompt**  will **measurably improve** LLM performance across:
 - Output accuracy
 - Token cost efficiency
 - Agentic tool-use behavior
@@ -144,7 +129,6 @@ Task (e.g., debug_001)
 |-----|-----------|
 | No paper studies developer-specific intent taxonomy | ✅ 8-class developer intent taxonomy |
 | No paper measures how prompt structure affects tool selection | ✅ Agentic tool-use metrics |
-| No paper studies voice→structured prompt pipeline | ✅ Devflow pipeline |
 | No paper uses intent-classified JSON schemas | ✅ Devflow JSON (Condition C) |
 | No paper handles multi-intent developer utterances | ✅ Composite intent class |
 
@@ -283,10 +267,10 @@ For each of 48 tasks, manually define:
 
 ### PHASE 2: CONDITION GENERATION
 
-#### 2.1 Condition A — Raw Voice
+#### 2.1 Condition A — Raw Input
 - Use `raw_utterance` as-is from dataset
 - Already has: fillers ("um", "uh"), lowercase, missing punctuation, run-on sentences
-- Labelled in prompt as "voice transcription" when sent to LLM
+- Labelled in prompt as "raw input" when sent to LLM
 - Output: plain string
   ```json
   { "condition_a": "um fix the null pointer in login service" }
@@ -309,21 +293,17 @@ Step-by-step deterministic cleaning:
   ```
 
 #### 2.3 Condition C — Devflow JSON (via Groq Llama 3.1 70B, FREE)
-- **Why not use LinearSVC + spaCy?**
-  - LinearSVC: one intent only, no composite support
-  - spaCy NER: insufficient accuracy for paper-quality results
-  - DistilBERT: cannot run locally (compute limits)
-- **Solution**: Generate via Groq API (free, fast, accurate)
+Generate via Groq API (free, fast, accurate)
 
 Prompt template:
 ```
-You are a developer intent classifier. Convert this voice utterance into structured JSON.
+You are a developer intent classifier. Convert this developer input into structured JSON.
 
-INPUT: "{raw_utterance}"
+INPUT: "{raw_input}"
 
 OUTPUT FORMAT (respond ONLY with valid JSON, no markdown):
 {
-  "raw_utterance": "...",
+  "raw_input": "...",
   "normalized": "cleaned version without fillers",
   "intent": "debug|generate|refactor|explain|scaffold|test|document|composite",
   "confidence_score": 0.XX,
@@ -387,7 +367,7 @@ Provide working code solutions. Be concise but complete.
 ```
 
 #### 3.2 Prompt Templates per Condition
-- **Condition A**: label = "voice transcription" → LLM knows to interpret noisy input
+- **Condition A**: label = "raw input" → LLM knows to interpret noisy input
 - **Condition B**: no special label → standard interaction
 - **Condition C**: label = "structured request" → LLM knows to parse JSON
 
@@ -670,11 +650,6 @@ sns.set_palette("colorblind")  # Accessible colors
   - Table 2: Tool use breakdown by condition
   - Table 3: Failure taxonomy
   - Table 4: Per-intent-class breakdown
-
-#### 6.3 Three Key Arguments to Make
-1. **Lemmatisation > stemming** for technical vocabulary (validated in your NLP coursework)
-2. **Bigrams essential** for developer compound terms ("null pointer", "unit test")
-3. **Structured JSON isolates format from quality** (why 3 conditions, not 2)
 
 ---
 
