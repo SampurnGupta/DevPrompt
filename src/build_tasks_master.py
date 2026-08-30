@@ -68,6 +68,7 @@ def main():
                 "intent_preservation_embedding": embedding,
                 "expected_tools": gold['expected_tools'],
                 "minimum_required_tools": gold['minimum_required_tools'],
+                "alternative_tool_sequences": gold.get('alternative_tool_sequences', []),
                 "entities": gold['entities']
             },
             "has_unit_test": gold['has_unit_test'],

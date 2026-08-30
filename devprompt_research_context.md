@@ -8,7 +8,7 @@
 ---
 
 ### 1.2 Core Hypothesis
-Raw, noisy, unstructured developer inputs (especially voice-transcribed) are ambiguous and hurt LLM performance. Converting them into a **structured, intent-classified JSON prompt**  will **measurably improve** LLM performance across:
+Raw, noisy, unstructured developer inputs are ambiguous and hurt LLM performance. Converting them into a **structured, intent-classified JSON prompt**  will **measurably improve** LLM performance across:
 - Output accuracy
 - Token cost efficiency
 - Agentic tool-use behavior
@@ -54,9 +54,9 @@ Raw, noisy, unstructured developer inputs (especially voice-transcribed) are amb
 **Three Conditions:**
 | Condition | Description | Purpose |
 |-----------|-------------|---------|
-| **A** | Raw voice transcription (unprocessed, with fillers "um/uh") | Baseline: what ASR produces |
-| **B** | Cleaned plain text (grammar-corrected, no fillers, no structure) | Isolates **format effect** from quality effect |
-| **C** | Devflow JSON (intent-classified, fully structured) | The proposed solution |
+| **A** | Raw developer prompt (unprocessed, with fillers/disfluencies) | Baseline: raw unstructured text |
+| **B** | Cleaned plain text (corrected, no fillers, no structure) | Isolates **format effect** from quality effect |
+| **C** | DevPrompt JSON (intent-classified, fully structured) | The proposed structured prompt |
 
 > **Why Condition B matters**: Without it, you can't tell if JSON helps because it's *structured* or just because it's *cleaner*. Condition B isolates these.
 
@@ -64,7 +64,7 @@ Raw, noisy, unstructured developer inputs (especially voice-transcribed) are amb
 | Model | Provider | API | Cost |
 |-------|----------|-----|------|
 | Gemini 1.5 Flash | Google AI Studio | `google.generativeai` | Free (1,500 RPD) |
-| Llama 3.3 70B | Cerebras | OpenAI-compatible | Free (unlimited) |
+| Llama 3.1 8B | Cerebras | OpenAI-compatible | Free (unlimited) |
 | Llama 3.1 70B | Groq | `groq` SDK | Free (14,400 TPD) |
 
 **LLM-as-Judge:** GPT-4o-mini (OpenAI, ~$2.50 from $3 budget)
@@ -391,14 +391,14 @@ def call_gemini(prompt):
     }
 ```
 
-**Llama 3.3 70B (Cerebras — OpenAI-compatible):**
+**Llama 3.1 8B (Cerebras — OpenAI-compatible):**
 ```python
 from openai import OpenAI
 cerebras_client = OpenAI(api_key="YOUR_CEREBRAS_KEY", base_url="https://api.cerebras.ai/v1")
 
 def call_cerebras(prompt):
     response = cerebras_client.chat.completions.create(
-        model="llama3.3-70b",
+        model="llama3.1-8b",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3, max_tokens=2048
     )

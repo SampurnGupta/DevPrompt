@@ -128,4 +128,11 @@ You have access to these 8 tools:
 When you use a tool, format it EXACTLY as:
 TOOL_CALL: tool_name(parameters)
 
+EXAMPLE — How to use tools:
+Task: Fix the null pointer exception in the login service.
+TOOL_CALL: search_codebase(query="login null pointer")
+TOOL_CALL: read_file(path="src/login.py")
+TOOL_CALL: write_file(path="src/login.py", content="...")
+TOOL_CALL: run_tests(test_file="tests/test_login.py")
+
 Provide working code solutions. Be concise but complete."""

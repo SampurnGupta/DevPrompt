@@ -82,24 +82,47 @@ def compute_agentic_metrics(
                    first_call_correct, minimum_requirements_met
     """
     gold = task['gold_standard']
-    expected_list: List[str] = gold['expected_tools']
     minimum_set: set = set(gold['minimum_required_tools'])
-    expected_set = set(expected_list)
     actual_list = extracted_tool_names
     actual_set = set(actual_list)
 
-    correct = actual_set & expected_set
-    precision = len(correct) / len(actual_set) if actual_set else 0.0
-    recall = len(correct) / len(expected_set) if expected_set else 0.0
-    f1 = (2 * precision * recall / (precision + recall)
-          if (precision + recall) > 0 else 0.0)
+    all_sequences = [gold['expected_tools']] + gold.get('alternative_tool_sequences', [])
+    best_f1, best_p, best_r = -1.0, 0.0, 0.0
+    best_seq = gold['expected_tools']
+
+    for seq in all_sequences:
+        expected_set = set(seq)
+        correct = actual_set & expected_set
+        p = len(correct) / len(actual_set) if actual_set else 0.0
+        r = len(correct) / len(expected_set) if expected_set else 0.0
+        f1 = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+        if f1 > best_f1:
+            best_f1, best_p, best_r = f1, p, r
+            best_seq = seq
+        elif f1 == best_f1:
+            current_first_correct = (
+                len(actual_list) > 0
+                and len(seq) > 0
+                and actual_list[0] == seq[0]
+            )
+            best_first_correct = (
+                len(actual_list) > 0
+                and len(best_seq) > 0
+                and actual_list[0] == best_seq[0]
+            )
+            if current_first_correct and not best_first_correct:
+                best_seq = seq
+
+    precision = best_p
+    recall = best_r
+    f1 = best_f1
 
     redundant = len(actual_list) - len(actual_set)
 
     first_call_correct = (
         len(actual_list) > 0
-        and len(expected_list) > 0
-        and actual_list[0] == expected_list[0]
+        and len(best_seq) > 0
+        and actual_list[0] == best_seq[0]
     )
 
     minimum_met = minimum_set.issubset(actual_set)
@@ -113,7 +136,7 @@ def compute_agentic_metrics(
         'first_call_correct': first_call_correct,
         'minimum_requirements_met': minimum_met,
         'tools_called': actual_list,
-        'expected_tools': expected_list,
+        'expected_tools': gold['expected_tools'],
         'minimum_required_tools': list(minimum_set)
     }
 

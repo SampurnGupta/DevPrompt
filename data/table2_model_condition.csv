@@ -1,6 +1,6 @@
-,hallucination_score,hallucination_score,hallucination_score,intent_preservation,intent_preservation,intent_preservation,tool_f1,tool_f1,tool_f1
-condition,a,b,c,a,b,c,a,b,c
-model,,,,,,,,,
-cerebras,0.1667,0.0833,0.1667,0.5913,0.63,0.5752,0.3891,0.2463,0.4991
-gemini,0.0417,0.0417,0.0,0.7311,0.7258,0.7066,0.125,0.116,0.1701
-groq,0.125,0.0833,0.0833,0.6845,0.6836,0.6959,0.4524,0.4627,0.5241
+,functional_correct,functional_correct,functional_correct,hallucination_score,hallucination_score,hallucination_score,intent_fidelity_score,intent_fidelity_score,intent_fidelity_score,tool_f1,tool_f1,tool_f1
+condition,a,b,c,a,b,c,a,b,c,a,b,c
+model,,,,,,,,,,,,
+cerebras,0.6154,0.6154,0.7308,0.1667,0.0833,0.1667,1.3125,1.3333,1.1875,0.4828,0.2916,0.5924
+gemini,0.8846,0.6923,0.5769,0.0417,0.0417,0.0,1.375,1.375,1.3125,0.1785,0.1708,0.2479
+groq,0.8077,0.6923,0.7692,0.125,0.0833,0.0833,1.4583,1.5417,1.3958,0.5239,0.5549,0.6112

@@ -86,7 +86,7 @@ def build_prompt(task: dict, condition: str, conditions_data: dict) -> str:
     cdata = conditions_data[task['task_id']]
     if condition == 'a':
         user_input = cdata['condition_a']
-        label = "Voice transcription (may contain filler words and informal speech):"
+        label = "Developer request:"
     elif condition == 'b':
         user_input = cdata['condition_b']
         label = "Developer request:"

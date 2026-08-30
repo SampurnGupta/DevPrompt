@@ -12,7 +12,7 @@ All client functions return a standardized dict:
 Models (as of 2026-05):
     Gemini  : gemini-2.0-flash       (google.genai SDK)
     Groq    : llama-3.3-70b-versatile
-    Cerebras: qwen-3-235b-a22b-instruct-2507
+    Cerebras: llama3.1-8b
     Judge   : gpt-4o-mini (OpenAI)
 """
 

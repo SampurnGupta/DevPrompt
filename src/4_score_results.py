@@ -3,15 +3,17 @@
 
 Calculates:
 1. Intent Preservation Score (Cosine Similarity)
-2. Agentic Metrics (Tool F1, Precision, Recall, Redundancy)
+2. Agentic Metrics (Tool F1, Precision, Recall, Redundancy, etc. using best-matching sequence)
 3. Token Efficiency (Tokens per call)
+4. LLM-as-judge Intent Fidelity Score (0-3 scale)
+5. Functional Correctness (Pass@1 via pytest execution)
 
 Results are stored in a 'scores' table in results.db.
 """
 
-import sys, os, json, sqlite3, re
+import sys, os, json, sqlite3, re, subprocess, argparse
 import numpy as np
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from dotenv import load_dotenv
 
 load_dotenv('.env.local')
@@ -57,6 +59,75 @@ Output ONLY valid JSON: {{"score": 0, "reasoning": "...", "hallucinated_claims":
         print(f"Hallucination API error: {e}")
         return 0
 
+def judge_intent_fidelity(task, response):
+    try:
+        client = get_openai_client()
+        ref = task['gold_standard']['intent_preservation_reference']
+        judge_prompt = f"""
+You are evaluating an LLM response for developer intent fidelity.
+A developer asked: "{ref}"
+The AI responded: "{response[:1500]}"
+
+Rubric:
+Does the response address the developer's request?
+- Score 0: Not at all — completely misses the point, ignores the core request
+- Score 1: Partially — attempts the request but misses key constraints or is incomplete
+- Score 2: Mostly — addresses the core request and satisfies most constraints
+- Score 3: Fully — completely and correctly satisfies the request and all constraints
+
+Output ONLY valid JSON: {{"score": X, "reasoning": "..."}}
+"""
+        result = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": judge_prompt}],
+            temperature=0.1, max_tokens=300
+        )
+        content = result.choices[0].message.content
+        match = re.search(r'\{.*\}', content, re.DOTALL)
+        if match:
+            return int(json.loads(match.group(0)).get('score', 0))
+        return 0
+    except Exception as e:
+        print(f"Intent Fidelity judge API error: {e}")
+        return 0
+
+def extract_first_code_block(text: str) -> str:
+    if not text:
+        return ""
+    match = re.search(r'```(?:python|javascript|js|bash|sh|sql)?\n(.*?)```', text, re.DOTALL | re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    return text.strip()
+
+def run_functional_test(task_id: str, run_id: str, response: str) -> Optional[bool]:
+    scratch_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scratch')
+    os.makedirs(scratch_dir, exist_ok=True)
+    
+    code = extract_first_code_block(response)
+    solution_path = os.path.join(scratch_dir, f"{run_id}_solution.py")
+    with open(solution_path, 'w', encoding='utf-8') as f:
+        f.write(code)
+        
+    test_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'tests', f"{task_id}_test.py")
+    if not os.path.exists(test_file):
+        return None
+        
+    env = os.environ.copy()
+    env['CURRENT_RUN_ID'] = run_id
+    env['CURRENT_SOLUTION_PATH'] = solution_path
+    
+    try:
+        res = subprocess.run(
+            [sys.executable, '-m', 'pytest', test_file, '-q', '--tb=no'],
+            capture_output=True, text=True, timeout=10, env=env
+        )
+        return res.returncode == 0
+    except subprocess.TimeoutExpired:
+        print(f"Timeout running test for {run_id}")
+        return False
+    except Exception as e:
+        print(f"Error running test for {run_id}: {e}")
+        return False
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -82,6 +153,8 @@ CREATE TABLE IF NOT EXISTS scores (
     first_call_correct  INTEGER,
     min_req_met         INTEGER,
     hallucination_score INTEGER,
+    intent_fidelity_score INTEGER DEFAULT NULL,
+    functional_correct  BOOLEAN DEFAULT NULL,
     FOREIGN KEY(run_id) REFERENCES results(run_id)
 );
 """
@@ -89,6 +162,14 @@ CREATE TABLE IF NOT EXISTS scores (
 def get_db():
     conn = sqlite3.connect(DB_PATH)
     conn.execute(SCHEMA_SCORES)
+    # Validate / alter schema dynamic check
+    cursor = conn.cursor()
+    cursor.execute("PRAGMA table_info(scores)")
+    columns = [row[1] for row in cursor.fetchall()]
+    if 'intent_fidelity_score' not in columns:
+        conn.execute("ALTER TABLE scores ADD COLUMN intent_fidelity_score INTEGER DEFAULT NULL")
+    if 'functional_correct' not in columns:
+        conn.execute("ALTER TABLE scores ADD COLUMN functional_correct BOOLEAN DEFAULT NULL")
     conn.commit()
     return conn
 
@@ -97,80 +178,201 @@ def load_tasks_master():
         data = json.load(f)
     return {t['task_id']: t for t in data}
 
-def score_results():
+def score_results(rescore_tools: bool = False, rescore_intent: bool = False, rescore_functional: bool = False):
     conn = get_db()
     tasks_map = load_tasks_master()
     
-    query = """
-        SELECT r.run_id, r.task_id, r.response, r.tool_calls_json
-        FROM results r
-        LEFT JOIN scores s ON r.run_id = s.run_id
-        WHERE r.error IS NULL AND r.response IS NOT NULL
-    """
+    if rescore_tools or rescore_intent or rescore_functional:
+        query = """
+            SELECT r.run_id, r.task_id, r.response, r.tool_calls_json
+            FROM results r
+            WHERE r.error IS NULL AND r.response IS NOT NULL
+        """
+        print(f"Rescore mode active (tools={rescore_tools}, intent={rescore_intent}, functional={rescore_functional})")
+    else:
+        # Standard run: skip already scored runs (Fix 1.5)
+        query = """
+            SELECT r.run_id, r.task_id, r.response, r.tool_calls_json
+            FROM results r
+            LEFT JOIN scores s ON r.run_id = s.run_id
+            WHERE r.error IS NULL AND r.response IS NOT NULL AND s.run_id IS NULL
+        """
+        print("Standard scoring mode active (skipping already scored runs)")
+        
     results = conn.execute(query).fetchall()
-    print(f"Scoring {len(results)} results...")
+    print(f"Found {len(results)} rows to process.")
     
-    # Pre-calculate Intent and Agentic metrics synchronously
-    scored_data = []
-    for run_id, task_id, response, tool_calls_json in results:
-        task = tasks_map.get(task_id)
-        if not task: continue
+    if not results:
+        conn.close()
+        print("No new results to score.")
+        return
+
+    # Backup logic for rescore mode
+    if rescore_tools or rescore_intent or rescore_functional:
+        print("Creating backup table scores_original if not exists...")
+        try:
+            # Check if scores_original exists
+            exists = conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='scores_original'").fetchone()
+            if not exists:
+                conn.execute("CREATE TABLE scores_original AS SELECT * FROM scores")
+                conn.commit()
+                print("Backup successful.")
+            else:
+                print("scores_original backup already exists, skipping backup.")
+        except Exception as e:
+            print(f"Backup warning: {e}")
+
+    # Ensure all run_ids exist in scores table before we run UPDATEs
+    for run_id, _, _, _ in results:
+        exists = conn.execute("SELECT 1 FROM scores WHERE run_id = ?", (run_id,)).fetchone()
+        if not exists:
+            conn.execute("INSERT INTO scores (run_id) VALUES (?)", (run_id,))
+    conn.commit()
+
+    if rescore_tools:
+        print("Recalculating agentic tool metrics for all matching runs...")
+        for run_id, task_id, response, tool_calls_json in results:
+            task = tasks_map.get(task_id)
+            if not task: continue
+            tool_calls = json.loads(tool_calls_json)
+            extracted_tool_names = [tc['tool'] for tc in tool_calls if 'tool' in tc]
+            agentic = compute_agentic_metrics(task, extracted_tool_names)
             
-        gold_embedding = task['gold_standard']['intent_preservation_embedding']
-        intent_score = compute_intent_preservation(gold_embedding, response)
-        
-        tool_calls = json.loads(tool_calls_json)
-        extracted_tool_names = [tc['tool'] for tc in tool_calls if 'tool' in tc]
-        agentic = compute_agentic_metrics(task, extracted_tool_names)
-        
-        scored_data.append((run_id, task, response, intent_score, agentic))
-        
-    print(f"Pre-calculated intent & agentic metrics for {len(scored_data)} items. Now fetching Hallucination via OpenAI...")
-    
-    from concurrent.futures import ThreadPoolExecutor, as_completed
-    
-    final_rows = []
-    with ThreadPoolExecutor(max_workers=15) as executor:
-        future_to_data = {
-            executor.submit(judge_hallucination, item[1], item[2]): item 
-            for item in scored_data
-        }
-        
-        count = 0
-        for future in as_completed(future_to_data):
-            item = future_to_data[future]
-            run_id, task, response, intent_score, agentic = item
-            hallucination_score = future.result()
-            
-            final_rows.append((
-                run_id, intent_score,
+            conn.execute("""
+                UPDATE scores SET
+                    tool_precision = ?,
+                    tool_recall = ?,
+                    tool_f1 = ?,
+                    total_tool_calls = ?,
+                    redundant_calls = ?,
+                    first_call_correct = ?,
+                    min_req_met = ?
+                WHERE run_id = ?
+            """, (
                 agentic['tool_precision'], agentic['tool_recall'], agentic['tool_f1'],
                 agentic['total_tool_calls'], agentic['redundant_calls'],
                 1 if agentic['first_call_correct'] else 0,
                 1 if agentic['minimum_requirements_met'] else 0,
-                hallucination_score
+                run_id
             ))
-            
-            count += 1
-            if count % 50 == 0:
-                print(f"  Processed {count}/{len(scored_data)} hallucination scores...")
+        conn.commit()
+        print("Agentic tool metrics update complete.")
 
-    # Batch Insert
-    conn.executemany("""
-        INSERT OR REPLACE INTO scores (
-            run_id, intent_preservation, tool_precision, tool_recall, tool_f1,
-            total_tool_calls, redundant_calls, first_call_correct, min_req_met, hallucination_score
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, final_rows)
-    
-    conn.commit()
-    print(f"Finished scoring {len(final_rows)} results.")
+    if rescore_functional:
+        print("Running Pass@1 functional tests for applicable tasks...")
+        for run_id, task_id, response, _ in results:
+            task = tasks_map.get(task_id)
+            if not task or not task.get('has_unit_test', False):
+                continue
+            
+            passed = run_functional_test(task_id, run_id, response)
+            conn.execute("""
+                UPDATE scores SET functional_correct = ? WHERE run_id = ?
+            """, (passed, run_id))
+        conn.commit()
+        print("Functional correctness update complete.")
+
+    if rescore_intent:
+        print("Running LLM intent fidelity judge for all results...")
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        scored_data = []
+        for run_id, task_id, response, _ in results:
+            task = tasks_map.get(task_id)
+            if not task: continue
+            scored_data.append((run_id, task, response))
+            
+        with ThreadPoolExecutor(max_workers=15) as executor:
+            future_to_run = {
+                executor.submit(judge_intent_fidelity, item[1], item[2]): item[0]
+                for item in scored_data
+            }
+            count = 0
+            for future in as_completed(future_to_run):
+                run_id = future_to_run[future]
+                score = future.result()
+                conn.execute("UPDATE scores SET intent_fidelity_score = ? WHERE run_id = ?", (score, run_id))
+                count += 1
+                if count % 50 == 0:
+                    print(f"  Processed {count}/{len(scored_data)} intent fidelity scores...")
+        conn.commit()
+        print("Intent fidelity update complete.")
+
+    # Standard run scoring logic
+    if not (rescore_tools or rescore_intent or rescore_functional):
+        scored_data = []
+        for run_id, task_id, response, tool_calls_json in results:
+            task = tasks_map.get(task_id)
+            if not task: continue
+                
+            gold_embedding = task['gold_standard']['intent_preservation_embedding']
+            intent_score = compute_intent_preservation(gold_embedding, response)
+            
+            tool_calls = json.loads(tool_calls_json)
+            extracted_tool_names = [tc['tool'] for tc in tool_calls if 'tool' in tc]
+            agentic = compute_agentic_metrics(task, extracted_tool_names)
+            
+            scored_data.append((run_id, task, response, intent_score, agentic))
+            
+        print(f"Pre-calculated metrics for {len(scored_data)} new items. Running judges via ThreadPoolExecutor...")
+        
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        
+        final_rows = []
+        with ThreadPoolExecutor(max_workers=15) as executor:
+            # We run both hallucination and intent fidelity judges
+            future_to_data = {
+                executor.submit(lambda t=item[1], r=item[2]: (judge_hallucination(t, r), judge_intent_fidelity(t, r))): item 
+                for item in scored_data
+            }
+            
+            count = 0
+            for future in as_completed(future_to_data):
+                item = future_to_data[future]
+                run_id, task, response, intent_score, agentic = item
+                hallucination_score, intent_fidelity = future.result()
+                
+                # Check functional test if applicable
+                passed = None
+                if task.get('has_unit_test', False):
+                    passed = run_functional_test(task['task_id'], run_id, response)
+                
+                conn.execute("""
+                    UPDATE scores SET
+                        intent_preservation = ?,
+                        tool_precision = ?,
+                        tool_recall = ?,
+                        tool_f1 = ?,
+                        total_tool_calls = ?,
+                        redundant_calls = ?,
+                        first_call_correct = ?,
+                        min_req_met = ?,
+                        hallucination_score = ?,
+                        intent_fidelity_score = ?,
+                        functional_correct = ?
+                    WHERE run_id = ?
+                """, (
+                    intent_score,
+                    agentic['tool_precision'], agentic['tool_recall'], agentic['tool_f1'],
+                    agentic['total_tool_calls'], agentic['redundant_calls'],
+                    1 if agentic['first_call_correct'] else 0,
+                    1 if agentic['minimum_requirements_met'] else 0,
+                    hallucination_score,
+                    intent_fidelity,
+                    passed,
+                    run_id
+                ))
+                
+                count += 1
+                if count % 50 == 0:
+                    print(f"  Processed {count}/{len(scored_data)} judges...")
+        conn.commit()
+        print("Standard scoring complete.")
     
     # Generate a quick summary
     print("\n=== PRELIMINARY SUMMARY BY CONDITION ===")
     summary_query = """
         SELECT r.condition, 
-               AVG(s.intent_preservation) as avg_intent,
+               AVG(s.intent_fidelity_score) as avg_intent_fidelity,
                AVG(s.tool_f1) as avg_f1,
                AVG(s.hallucination_score) as avg_hallucination,
                AVG(r.total_tokens) as avg_tokens
@@ -179,27 +381,22 @@ def score_results():
         GROUP BY r.condition
     """
     summary = conn.execute(summary_query).fetchall()
-    print(f"{'Cond':<6} | {'Intent':<8} | {'Tool F1':<8} | {'Halluc':<6} | {'Tokens':<8}")
+    print(f"{'Cond':<6} | {'Fidelity':<8} | {'Tool F1':<8} | {'Halluc':<6} | {'Tokens':<8}")
     print("-" * 50)
-    for cond, intent, f1, halluc, tokens in summary:
-        print(f"{cond:<6} | {intent or 0:.4f} | {f1 or 0:.4f} | {halluc or 0:.4f} | {tokens or 0:.1f}")
+    for cond, fidelity, f1, halluc, tokens in summary:
+        print(f"{cond:<6} | {fidelity or 0:.4f} | {f1 or 0:.4f} | {halluc or 0:.4f} | {tokens or 0:.1f}")
         
-    print("\n=== PRELIMINARY SUMMARY BY MODEL ===")
-    model_query = """
-        SELECT r.model, 
-               AVG(s.intent_preservation) as avg_intent,
-               AVG(s.tool_f1) as avg_f1
-        FROM results r
-        JOIN scores s ON r.run_id = s.run_id
-        GROUP BY r.model
-    """
-    model_summary = conn.execute(model_query).fetchall()
-    print(f"{'Model':<25} | {'Intent':<8} | {'Tool F1':<8}")
-    print("-" * 50)
-    for model, intent, f1 in model_summary:
-        print(f"{model:<25} | {intent or 0:.4f} | {f1 or 0:.4f}")
-
     conn.close()
 
 if __name__ == "__main__":
-    score_results()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--rescore-tools', action='store_true', help="Recompute agentic tool metrics from results table without API calls")
+    parser.add_argument('--rescore-intent', action='store_true', help="Re-run LLM intent fidelity judge for all results")
+    parser.add_argument('--rescore-functional', action='store_true', help="Re-run Pass@1 pytest execution on extracted code blocks")
+    args = parser.parse_args()
+    
+    score_results(
+        rescore_tools=args.rescore_tools,
+        rescore_intent=args.rescore_intent,
+        rescore_functional=args.rescore_functional
+    )

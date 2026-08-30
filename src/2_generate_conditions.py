@@ -1,7 +1,7 @@
 """
 2_generate_conditions.py — Phase 2: Generate all 3 prompt conditions for 48 tasks.
 
-Condition A: raw utterance as-is (voice transcription)
+Condition A: raw unstructured developer prompt (baseline)
 Condition B: deterministic local cleaning (filler removal, contraction expansion, normalization)
 Condition C: Groq Llama 3.3 70B → DevPrompt structured JSON
 
