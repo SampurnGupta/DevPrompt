@@ -178,7 +178,7 @@ def load_tasks_master():
         data = json.load(f)
     return {t['task_id']: t for t in data}
 
-def score_results(rescore_tools: bool = False, rescore_intent: bool = False, rescore_functional: bool = False):
+def score_results(rescore_tools: bool = False, rescore_intent: bool = False, rescore_functional: bool = False, filter_model: str = None):
     conn = get_db()
     tasks_map = load_tasks_master()
     
@@ -188,7 +188,9 @@ def score_results(rescore_tools: bool = False, rescore_intent: bool = False, res
             FROM results r
             WHERE r.error IS NULL AND r.response IS NOT NULL
         """
-        print(f"Rescore mode active (tools={rescore_tools}, intent={rescore_intent}, functional={rescore_functional})")
+        if filter_model:
+            query += f" AND r.model = '{filter_model}'"
+        print(f"Rescore mode active (tools={rescore_tools}, intent={rescore_intent}, functional={rescore_functional}, model={filter_model})")
     else:
         # Standard run: skip already scored runs (Fix 1.5)
         query = """
@@ -393,10 +395,12 @@ if __name__ == "__main__":
     parser.add_argument('--rescore-tools', action='store_true', help="Recompute agentic tool metrics from results table without API calls")
     parser.add_argument('--rescore-intent', action='store_true', help="Re-run LLM intent fidelity judge for all results")
     parser.add_argument('--rescore-functional', action='store_true', help="Re-run Pass@1 pytest execution on extracted code blocks")
+    parser.add_argument('--model', type=str, default=None, choices=['gemini', 'groq', 'cerebras'], help="Filter to specific model")
     args = parser.parse_args()
     
     score_results(
         rescore_tools=args.rescore_tools,
         rescore_intent=args.rescore_intent,
-        rescore_functional=args.rescore_functional
+        rescore_functional=args.rescore_functional,
+        filter_model=args.model
     )

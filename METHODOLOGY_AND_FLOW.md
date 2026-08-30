@@ -283,7 +283,7 @@ The `build_tasks_master.py` script does NOT propagate `alternative_tool_sequence
 
 | Model | Provider | Size | Rate Limit | Role |
 |-------|----------|------|-----------|------|
-| `gemini-2.0-flash-001` | OpenRouter | Proprietary | No daily limit | Evaluatee |
+| `gemini-2.5-flash` | OpenRouter | Proprietary | No daily limit | Evaluatee |
 | `llama-3.3-70b-versatile` | Groq | 70B | 100K TPD | Evaluatee + Condition C generator |
 | `llama3.1-8b` | Cerebras | 8B | 1M TPD | Evaluatee |
 | `gpt-4o-mini` | OpenAI | Proprietary | Paid | Judge only |
@@ -296,7 +296,7 @@ The `build_tasks_master.py` script does NOT propagate `alternative_tool_sequence
 
 | Shortcoming | Severity | Mitigation |
 |------------|---------|------------|
-| Single run per cell (n=1) — no within-cell variance | High | Report means with CIs; run Groq with 3 seeds as variance check |
+| Single run per cell (n=1) — no within-cell variance | High | Report means with CIs. All runs used temperature=0.3; temperature sensitivity is left for future work. |
 | Unknown dataset provenance | High | Must add provenance paragraph before submission |
 | Single-rater gold standards (no inter-rater reliability) | Medium | Document as limitation; add `alternative_tool_sequences` as partial fix |
 | Declarative evaluation (tools not executed) | Medium | Functional correctness (Pass@1) partially addresses this |

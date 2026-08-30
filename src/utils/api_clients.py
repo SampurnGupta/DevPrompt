@@ -72,7 +72,7 @@ def call_gemini(prompt: str, system_prompt: str = None, temperature: float = 0.3
     for attempt in range(retries):
         try:
             response = client.chat.completions.create(
-                model="google/gemini-2.0-flash-001",
+                model="google/gemini-2.5-flash",
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens,

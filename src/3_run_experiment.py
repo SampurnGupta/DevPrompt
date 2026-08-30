@@ -100,9 +100,9 @@ def build_prompt(task: dict, condition: str, conditions_data: dict) -> str:
 # ---------------------------------------------------------------------------
 
 RATE_DELAYS = {
-    'gemini':   1.5,   # OpenRouter free tier — generous RPM, no daily limit
-    'groq':     2.1,   # 30 RPM free tier (conservative after TPD hit)
-    'cerebras': 2.1,   # 30 RPM free tier
+    'gemini':   4.5,   # OpenRouter free tier — settle in-flight requests to avoid 402
+    'groq':     2.1,   
+    'cerebras': 2.1,   
 }
 
 # ---------------------------------------------------------------------------
@@ -165,7 +165,7 @@ def run_experiment(pilot: bool = False, resume: bool = False, only_model: str = 
 
                 try:
                     result  = model_fn(prompt, system_prompt=TOOL_SYSTEM_PROMPT,
-                                       temperature=0.3, max_tokens=2048)
+                                       temperature=0.3, max_tokens=1024 if model_name == 'gemini' else 2048)
                     elapsed = time.time() - t0
                     ext     = extract_tool_calls(result['response'])
                     val     = validate_tool_calls(ext)
