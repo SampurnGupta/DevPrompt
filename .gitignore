@@ -1,4 +1,5 @@
 files.zip
+figures.zip
 venv/
 .env
 .env.local
@@ -24,3 +25,5 @@ temp/
 DevPrompt_Execution_DeepDive.md
 DevPrompt_Project_Summary.md
 walkthrough.md
+scratch/
+list_tasks.py
