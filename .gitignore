@@ -4,6 +4,9 @@ venv/
 .env.local
 node_modules/
 devflow_dataset.csv
+project_prep_document.md
+REVIEW_part1_sections1-20.md
+REVIEW_part2_sections21-34.md
 
 # Python
 __pycache__/
