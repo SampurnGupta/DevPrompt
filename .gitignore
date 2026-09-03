@@ -23,7 +23,7 @@ temp/
 # !data/results.db
 
 DevPrompt_Execution_DeepDive.md
-DevPrompt_Project_Summary.md
-walkthrough.md
+# DevPrompt_Project_Summary.md
+# walkthrough.md
 scratch/
 list_tasks.py
